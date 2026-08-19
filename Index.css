@@ -1,1 +1,312 @@
-:root{font-family:Inter,system-ui,sans-serif;background:#070a12;color:#eef2ff;color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-width:320px;background:radial-gradient(circle at 20% 0%,#172047 0,#070a12 38%,#05060b 100%)}button,input{font:inherit}.app{max-width:1120px;margin:auto;padding:24px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.eyebrow{font-size:11px;letter-spacing:3px;color:#7f8bb3}h1{margin:4px 0;font-size:32px;letter-spacing:2px}h1 span{color:#7c9cff}.status{border:1px solid #30364d;border-radius:999px;padding:8px 12px;font-size:11px;color:#9aa3bf}.status i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff5d73;margin-right:7px}.status.online i{background:#35e58a}.hero{display:grid;grid-template-columns:1fr 1.6fr;gap:16px}.period,.prediction,.panel{background:rgba(13,17,31,.86);border:1px solid #242b43;border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.22)}.period,.prediction{padding:24px}.period small,.prediction small{color:#7f8bb3;letter-spacing:2px}.period strong{display:block;font-size:28px;margin:12px 0;word-break:break-all}.timer{font-size:48px;font-weight:800;color:#9eafff}.signals{display:flex;gap:14px;margin:20px 0}.signals div{flex:1;background:#11172a;border-radius:16px;padding:16px}.signals label,.audit span{display:block;color:#7f8bb3;font-size:10px;text-transform:uppercase;letter-spacing:1px}.signals strong{display:block;margin-top:7px;font-size:22px}.confidence{display:flex;justify-content:space-between;border-top:1px solid #242b43;padding-top:15px}.panel{padding:18px;margin-top:16px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.panel-head h2{font-size:15px;margin:0}.panel-head span{font-size:11px;color:#69738f}.tape{display:flex;gap:9px;overflow:auto;padding-bottom:4px}.result{min-width:62px;text-align:center}.result>span{display:block;font-size:8px;color:#69738f;margin-top:5px}.ball{width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;font-weight:900;border:2px solid #343c59}.ball.red{background:#321b2a;color:#ff6d8b;border-color:#ff5579}.ball.green{background:#123126;color:#54efad;border-color:#35d995}.ball.violet{background:#27163d;color:#c28aff;border-color:#ad6fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.audit{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.audit>div{background:#0e1424;border-radius:14px;padding:13px}.audit b{display:block;margin-top:7px}.win{color:#43e79b}.loss{color:#ff6b83}.notes{margin:0;padding-left:20px;color:#9ba5c0;font-size:13px;line-height:1.8}.error{margin-top:16px;padding:13px;border:1px solid #6d2d3c;background:#24131a;color:#ff9aab;border-radius:14px;font-size:12px}.muted{color:#68738f;font-size:13px}footer{display:flex;justify-content:space-between;gap:15px;margin:18px 4px;color:#59627a;font-size:9px;letter-spacing:.5px}@media(max-width:720px){.app{padding:14px}.topbar{align-items:flex-start}h1{font-size:24px}.hero,.grid{grid-template-columns:1fr}.timer{font-size:40px}footer{flex-direction:column}.signals strong{font-size:18px}}
+/* ----- रूट वेरिएबल्स ----- */
+:root {
+  --bg: #0b0e14;
+  --surface: #161c24;
+  --surface2: #1e2630;
+  --text: #e8edf5;
+  --text-muted: #8899aa;
+  --border: #2a3440;
+  --accent: #6c5ce7;
+  --green: #00b894;
+  --red: #e17055;
+  --violet: #a29bfe;
+  --shadow: 0 8px 24px rgba(0,0,0,0.4);
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+[data-theme="light"] {
+  --bg: #f0f4fa;
+  --surface: #ffffff;
+  --surface2: #e9edf4;
+  --text: #1a1f2c;
+  --text-muted: #5a6a7a;
+  --border: #d0d8e0;
+  --shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background var(--transition), color var(--transition);
+}
+
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: var(--bg);
+  min-height: 100vh;
+  transition: background var(--transition);
+}
+
+/* ----- टॉपबार ----- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+h1 {
+  font-size: 2.2rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h1 span { color: var(--accent); }
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.theme-btn {
+  background: var(--surface2);
+  border: none;
+  font-size: 1.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.theme-btn:hover { transform: scale(1.05); }
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.status i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e17055;
+}
+.status.online i { background: #00b894; }
+.status.online { color: #00b894; }
+
+/* ----- हीरो ----- */
+.hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+  box-shadow: var(--shadow);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.period {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.period small { font-size: 0.7rem; color: var(--text-muted); }
+.period strong { font-size: 2rem; font-weight: 700; }
+.timer {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 0.2rem;
+}
+
+.prediction {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.prediction small { font-size: 0.7rem; color: var(--text-muted); }
+.signals {
+  display: flex;
+  gap: 2rem;
+}
+.signals div label { font-size: 0.7rem; color: var(--text-muted); margin-right: 0.5rem; }
+.signals div strong { font-size: 1.5rem; }
+.confidence {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.confidence span { font-size: 0.8rem; color: var(--text-muted); }
+.confidence b { font-size: 1.2rem; }
+.conf-bar {
+  height: 4px;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.5s;
+  width: 0%;
+}
+
+/* ----- एरर / लोडिंग ----- */
+.error, .loading {
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+.error { background: #e1705533; color: #e17055; border-left: 4px solid #e17055; }
+.loading { background: var(--surface2); color: var(--text-muted); }
+
+/* ----- पैनल ----- */
+.panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.panel-head h2 { margin: 0; font-size: 1.1rem; }
+.panel-head span { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ----- टेप ----- */
+.tape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--surface2);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+}
+.ball {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  background: var(--text-muted);
+}
+.ball.red { background: var(--red); }
+.ball.green { background: var(--green); }
+.ball.violet { background: var(--violet); }
+
+/* ----- ऑडिट ----- */
+.audit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1.5rem;
+}
+.audit div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.audit .overall {
+  grid-column: span 2;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.win { color: var(--green); }
+.loss { color: var(--red); }
+
+/* ----- स्टैट्स ----- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+.stats-grid div {
+  display: flex;
+  justify-content: space-between;
+  background: var(--surface2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+.stats-grid label { font-size: 0.7rem; color: var(--text-muted); }
+.stats-grid span { font-weight: 600; }
+
+.trend {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+  justify-content: center;
+}
+.trend span { font-size: 1.4rem; }
+.trend .correct { color: var(--green); }
+.trend .wrong { color: var(--red); }
+
+/* ----- नोट्स & सेटिंग्स ----- */
+.notes {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+.notes li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.settings-mini {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.settings-mini select {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
+/* ----- ग्रिड (कॉलम) ----- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ----- फुटर ----- */
+footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+/* ----- रिस्पॉन्सिव ----- */
+@media (max-width: 640px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .signals { justify-content: center; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  }
